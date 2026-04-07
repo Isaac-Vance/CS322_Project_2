@@ -1,0 +1,17 @@
+{% extends "patients.html" %}
+{% block form %}
+<body>
+<form method="post">
+  <label for="name"> Patient full name:</label><br>
+  <input type="text" id="name" name="name" value="John Doe"><br>
+  <label for="diagnosis">Diagnosis:</label><br>
+  <input type="text" id="diagnosis" name="diagnosis" value=""><br>
+  <label for="treatment"> Treatment:</label><br>
+  <input type="text" id="treatment" name="treatment" value=""><br>
+  <label for="name"> Patient full name:</label><br>
+  <input type="number" id="priority" name="priority" value=""><br><br>
+  <label for="priority">Priority:</label><br><br>
+  <input type="submit" value="Submit">
+</form>
+</body>
+{% endblock %}

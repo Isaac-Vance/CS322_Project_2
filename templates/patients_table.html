@@ -1,22 +1,30 @@
 {% extends "patients.html" %}
 {% block content %}
 <table class="table">
-    <thead>
-        <tr>
-            <th>Name</th>
-            <th>Diagnosis</th>
-            <th>Treatment</th>
-            <th>Priority</th>
-        </tr> </thead>
-    <tbody>
-        {% for patient in patient_info %}
-        <tr>
-            <td>{{ patient.name }}</td>
-            <td>{{ patient.diagnosis }}</td>
-            <td>{{ patient.treatment }}</td>
-            <td>{{ patient.priority }}</td>
-        </tr>
-        {% endfor %}
-    </tbody>
+ <thead>
+    <tr>
+        <th>Name</th>
+        <th>Diagnosis</th>
+        <th>Treatment</th>
+        <th>Priority</th>
+        <th>Actions</th> </tr>
+</thead>
+<tbody>
+    {% for patient in patient_info %}
+    <tr>
+        <td>{{ patient.name }}</td>
+        <td>{{ patient.diagnosis }}</td>
+        <td>{{ patient.treatment }}</td>
+        <td>{{ patient.priority }}</td>
+        <td>
+            <a href="/delete/{{ loop.index0 }}"
+               onclick="return confirm('Are you sure?')">Delete</a>
+        </td>
+    </tr>
+    {% endfor %}
+</tbody>
 </table>
+{% endblock %}
+{% block form %}
+    {% include "new_patient_form.html" %}
 {% endblock %}

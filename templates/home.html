@@ -2,9 +2,23 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Isaac's Hospital</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='home.css') }}">
 </head>
-<body>
-<a href= "/patients">Patient List</a>
+<body class="home-page">
+    <main class="hero-shell">
+        <section class="hero-card">
+            <p class="eyebrow">Patient Intake Dashboard</p>
+            <h1>Isaac's Hospital</h1>
+            <p class="hero-copy">
+                Manage patient records with a cleaner workflow for reviewing active cases,
+                adding new admissions, and removing outdated entries.
+            </p>
+            <div class="hero-actions">
+                <a class="primary-action" href="/patients">Open Patient List</a>
+            </div>
+        </section>
+    </main>
 </body>
 </html>

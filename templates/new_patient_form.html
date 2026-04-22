@@ -1,15 +1,101 @@
-{% block form %}
-<body>
-<form method="post">
-  <label for="name"> Patient full name:</label><br>
-  <input type="text" id="name" name="name" value="John Doe"><br>
-  <label for="diagnosis">Diagnosis:</label><br>
-  <input type="text" id="diagnosis" name="diagnosis" value=""><br>
-  <label for="treatment"> Treatment:</label><br>
-  <input type="text" id="treatment" name="treatment" value=""><br>
-  <label for="priority">Priority:</label><br>
-  <input type="number" id="priority" name="priority" value=""><br><br>
-  <input type="submit" value="Submit">
+<hr>
+<h3>Add New Patient</h3>
+<form method="post" action="/patients" id="patientForm" class="needs-validation" novalidate>
+    <div class="mb-3">
+        <label for="name" class="form-label">Patient Full Name:</label>
+        <input type="text" class="form-control" id="name" name="name"
+               maxlength="20" required placeholder="e.g. John Doe">
+        <div class="invalid-feedback">
+            Name is required and must be 20 characters or fewer.
+        </div>
+    </div>
+
+    <div class="mb-3">
+        <label for="diagnosis" class="form-label">Diagnosis:</label>
+        <input type="text" class="form-control" id="diagnosis" name="diagnosis"
+               maxlength="20" required placeholder="e.g. Broken Arm">
+        <div class="invalid-feedback">
+            Diagnosis is required and must be 20 characters or fewer.
+        </div>
+    </div>
+
+    <div class="mb-3">
+        <label for="treatment" class="form-label">Treatment:</label>
+        <input type="text" class="form-control" id="treatment" name="treatment"
+               maxlength="20" required placeholder="e.g. Cast">
+        <div class="invalid-feedback">
+            Treatment is required and must be 20 characters or fewer.
+        </div>
+    </div>
+
+    <div class="mb-3">
+        <label for="priority" class="form-label">Priority (1-10):</label>
+        <input type="number" class="form-control" id="priority" name="priority"
+               min="1" max="10" required placeholder="e.g. 3">
+        <div class="invalid-feedback" id="priorityFeedback">
+            Priority must be a whole number between 1 and 10.
+        </div>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Submit</button>
 </form>
-</body>
-{% endblock %}
+
+<script>
+// Client-side validation — runs BEFORE data is sent to the backend
+(function () {
+    'use strict';
+
+    let form = document.getElementById('patientForm');
+
+    form.addEventListener('submit', function (event) {
+        // Reset custom validity
+        let priorityInput = document.getElementById('priority');
+        priorityInput.setCustomValidity('');
+
+        // Custom priority validation: must be a positive integer between 1 and 10
+        let priorityVal = priorityInput.value.trim();
+        if (priorityVal === '') {
+            priorityInput.setCustomValidity('Priority is required.');
+        } else {
+            let num = Number(priorityVal);
+            if (!Number.isInteger(num) || num < 1 || num > 10) {
+                priorityInput.setCustomValidity('Priority must be a whole number between 1 and 10.');
+            }
+        }
+
+        // Check text field lengths (extra JS check beyond maxlength attribute)
+        let nameInput = document.getElementById('name');
+        let diagnosisInput = document.getElementById('diagnosis');
+        let treatmentInput = document.getElementById('treatment');
+
+        nameInput.setCustomValidity('');
+        diagnosisInput.setCustomValidity('');
+        treatmentInput.setCustomValidity('');
+
+        if (nameInput.value.trim().length === 0) {
+            nameInput.setCustomValidity('Name is required.');
+        } else if (nameInput.value.length > 20) {
+            nameInput.setCustomValidity('Name must be 20 characters or fewer.');
+        }
+
+        if (diagnosisInput.value.trim().length === 0) {
+            diagnosisInput.setCustomValidity('Diagnosis is required.');
+        } else if (diagnosisInput.value.length > 20) {
+            diagnosisInput.setCustomValidity('Diagnosis must be 20 characters or fewer.');
+        }
+
+        if (treatmentInput.value.trim().length === 0) {
+            treatmentInput.setCustomValidity('Treatment is required.');
+        } else if (treatmentInput.value.length > 20) {
+            treatmentInput.setCustomValidity('Treatment must be 20 characters or fewer.');
+        }
+
+        if (!form.checkValidity()) {
+            event.preventDefault();
+            event.stopPropagation();
+        }
+
+        form.classList.add('was-validated');
+    }, false);
+})();
+</script>
